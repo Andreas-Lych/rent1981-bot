@@ -1,6 +1,7 @@
 import asyncio
 import os
 import aioredis
+from aiohttp_apispec import docs, request_schema, setup_aiohttp_apispec
 
 from telegram import Bot
 
@@ -19,6 +20,8 @@ async def send_message_to_all(text: str) -> None:
 
     for chat_id in set(result):
         await send_message(chat_id=int(chat_id), text=text)
+
+
 
 
 if __name__ == "__main__":
