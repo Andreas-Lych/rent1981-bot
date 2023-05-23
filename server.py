@@ -65,7 +65,10 @@ async def websockets(request):
                 await ws.close()
             else:
                 data = loads(msg.data)
-                await send_message_to_all(data["message"])
+                if data.get("chat_id"):
+                    await send_message(data.get("chat_id"), data.get("message"))
+                else:
+                    await send_message_to_all(data.get("message"))
                 await ws.send_str(msg.data)
         elif msg.type == WSMsgType.ERROR:
             logger.error(f"WS connection closed with exception {request.app.ws.exception()}")
